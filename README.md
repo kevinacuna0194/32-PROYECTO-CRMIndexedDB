@@ -1,8 +1,8 @@
 <h1 align="center"> CRM IndexedDB </h1>
 
-**Herramienta para dar seguimiento a nuestros clientes.** 🚀
+<p align="center"> Herramienta para dar seguimiento a nuestros clientes. 🚀 </p>
 
-<p align="left" font-weight="bold">
+<p align="center" font-weight="bold">
    <img src="https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green">
 </p>
 
@@ -18,11 +18,11 @@
 - `Funcionalidad 4`: **descripción de la funcionalidad**
 - `Funcionalidad 5`: **descripción de la funcionalidad**
 
-# 📁 Acceso al proyecto
+## 📁 Acceso al proyecto
 
 **Indica cómo se puede descargar o acceder al código fuente del proyecto, ya sea proyecto inicial o final**
 
-# 🛠️ Abre y ejecuta el proyecto
+## 🛠️ Abre y ejecuta el proyecto
 
 **Muestra las instrucciones necesarias para abrir y ejecutar el proyecto**
 
