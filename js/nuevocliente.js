@@ -40,17 +40,61 @@
 
             return;
         }
+
+        /** Tenemos que abrir una conexión y después, por medio de transacciones, colocar o agregar ese nuevo registro. 
+         * Object literal enhancement
+        */
+        const cliente = {
+            nombre,
+            email,
+            telefono,
+            empresa
+        }
+
+        /** Generar un ID único */
+        cliente.id = Date.now();
+
+        crearNuevoCliente(cliente);
+    }
+
+    /** A estas alturas ya pase la validación */
+    function crearNuevoCliente(cliente) {
+        /** DB - instancia la la DB conectarDB() */
+        const transaction = DB.transaction(['crm'], 'readwrite');
+
+        /** Definir ObjectStore 
+         * Hace las acciones
+        */
+        const objectStore = transaction.objectStore('crm');
+
+        objectStore.add(cliente);
+
+        transaction.onerror = function () {
+            console.error('Hubo un error')
+
+            imprimirAlerta('Hubo un Error', 'error');
+        };
+
+        transaction.oncomplete = function () {
+            console.log('Cliente agregado');
+
+            imprimirAlerta('El Cliente se Agregó correctamente');
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 3000);
+        };
     }
 
     function imprimirAlerta(mensaje, tipo) {
 
         const alerta = document.querySelector('.alerta');
 
-        if(!alerta) {
+        if (!alerta) {
             /** Crear alerta */
             const divMensaje = document.createElement('div');
 
-            divMensaje.classList.add('px-4', 'py-3', 'rounded', 'max-w-lg', 'max-auto', 'mt-6', 'text-center', 'border', 'alerta');
+            divMensaje.classList.add('px-4', 'py-3', 'rounded', 'max-w-lg', 'max-auto', 'mt-6', 'text-center', 'border', 'alerta', 'uppercase');
 
             if (tipo === 'error') {
                 divMensaje.classList.add('bg-red-100', 'border-red-400', 'text-red-700');

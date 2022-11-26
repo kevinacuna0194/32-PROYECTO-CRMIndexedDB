@@ -1,4 +1,4 @@
-## align="center"> CRM IndexedDB
+## 32 - CRM IndexedDB
 ~~~
 Herramienta para dar seguimiento a nuestros clientes.
 ~~~
@@ -7,4 +7,4 @@ Herramienta para dar seguimiento a nuestros clientes.
    <img src="https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green">
 </p>
 
-:octocat:
+:zap::octocat::zap:
