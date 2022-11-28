@@ -2,6 +2,8 @@
 (function () {
   let DB;
 
+  const listadoClientes = document.querySelector('#listado-clientes');
+
   document.addEventListener("DOMContentLoaded", () => {
     crearDB();
 
@@ -9,7 +11,43 @@
     if (window.indexedDB.open('crm', 1)) {
       obtenerClientes();
     }
+
+    listadoClientes.addEventListener('click', eliminarRegistro);
   });
+
+  function eliminarRegistro(e) {
+    // console.log(e.target.classList);
+    if (e.target.classList.contains('eliminar')) {
+      // console.log('Diste clcik en eliminar...');
+      // Acceder al valor del atributo personalizado
+      const idEliminar = Number( e.target.dataset.cliente );
+
+      /** Ventana emergente nativa del navegador 
+       * Cancelar = false
+       * Aceptar = true
+      */
+      const confirmar = confirm('¿Deseas eliminar este cliente?');
+
+      // console.log(confirmar);
+      if (confirmar) {
+        const transaction = DB.transaction(['crm'], 'readwrite');
+
+        const objectStore = transaction.objectStore('crm');
+
+        objectStore.delete(idEliminar);
+
+        transaction.oncomplete = function () {
+          console.log('Eliminado...');
+
+          e.target.parentElement.parentElement.remove();
+        }
+
+        transaction.onerror = function () {
+          console.log('Hubo un error');
+        }
+      }
+    }
+  }
 
   /** Crea la BD de IndexedDB */
   function crearDB() {
@@ -68,7 +106,6 @@
         if (cursor) {
           const { nombre, empresa, email, telefono, id } = cursor.value;
 
-          const listadoClientes = document.querySelector('#listado-clientes');
           listadoClientes.innerHTML += `
 
               <tr>
@@ -84,7 +121,7 @@
                   </td>
                   <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5">
                       <a href="editar-cliente.html?id=${id}" class="text-teal-600 hover:text-teal-900 mr-5 uppercase">Editar</a>
-                      <a href="#" data-cliente="${id}" class="text-red-600 hover:text-red-900 uppercase">Eliminar</a>
+                      <a href="#" data-cliente="${id}" class="text-red-600 hover:text-red-900 uppercase eliminar">Eliminar</a>
                   </td>
               </tr>
           `;
