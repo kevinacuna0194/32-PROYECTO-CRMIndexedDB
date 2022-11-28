@@ -11,6 +11,20 @@
         formulario.addEventListener('submit', validarCliente);
     });
 
+    function conectarDB() {
+
+        const abrirConexion = window.indexedDB.open('crm', 1);
+    
+        abrirConexion.onerror = function() {
+            console.log('Hubo un error');
+        }
+    
+        abrirConexion.onsuccess = function() {
+            /** Instancia a la BD con todos los métodos disponibles */
+            DB = abrirConexion.result;
+        }
+    }
+
     function validarCliente(e) {
         e.preventDefault();
 
@@ -56,13 +70,13 @@
         objectStore.add(cliente);
 
         transaction.onerror = function () {
-            console.error('Hubo un error')
+            // console.error('Hubo un error')
 
             imprimirAlerta('Hubo un Error', 'error');
         };
 
         transaction.oncomplete = function () {
-            console.log('Cliente agregado');
+            // console.log('Cliente agregado');
 
             imprimirAlerta('El Cliente se Agregó correctamente');
 
